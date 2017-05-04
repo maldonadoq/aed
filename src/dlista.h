@@ -56,7 +56,12 @@ bool dlista<T,C>::remove(T x){
 	if(!find(x,p,r))	return false;
 	dnode<T> *t = *p;
 	*p = (*p)->m_node[1];
-	if(*p)	(*p)->m_node[0] = ((*p)->m_node[0])->m_node[0];
+	if(*p){
+		(*p)->m_node[0] = ((*p)->m_node[0])->m_node[0];
+		delete t;
+		return true;
+	}
+	this->m_tail->m_node[0] = r;
 	delete t;
 	return true;
 }

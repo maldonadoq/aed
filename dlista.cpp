@@ -7,10 +7,11 @@ using namespace std;
 
 int main(int argc, char const *argv[]){
 	dlista<int, cm<int>> *a = new dlista<int, cm<int>>();
-	int t=40, r;
+	int t=10, r;
 	srand(time(NULL));
 	for(int i=0; i<t; i++){
-		r = rand()%t;
+		r = i;
+		//r = rand()%t;
 		cout << r << " ";
 		a->insert(r);
 	}
