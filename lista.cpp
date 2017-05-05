@@ -1,23 +1,24 @@
 #include <iostream>
 #include <stdio.h>
-#include "src/dlista.h"
 #include "src/cmp.h"
+#include "src/dlista.h"
+#include "src/clista.h"
 
 using namespace std;
 
 int main(int argc, char const *argv[]){
-	dlista<int, cm<int>> *a = new dlista<int, cm<int>>();
-	int t=10, r;
+	//dlista<int, cml<int>> *a = new dlista<int, cml<int>>();
+	clista<int, cml<int>> *a = new clista<int, cml<int>>();
+	int t=20, r;
+	//cout << "tamaño: "; cin >> t;
 	srand(time(NULL));
 	for(int i=0; i<t; i++){
-		r = i;
-		//r = rand()%t;
+		r = rand()%t;
 		cout << r << " ";
 		a->insert(r);
 	}
 	cout << endl;
 	a->print();
-	a->printr();
 	delete a;
 	return 0;
 }

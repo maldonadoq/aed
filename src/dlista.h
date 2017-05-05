@@ -15,8 +15,8 @@ private:
 	C cmp;
 public:
 	dlista(){
-		this->m_head = new dnode<T>(0);
-		this->m_tail = new dnode<T>(0);
+		this->m_head = NULL;
+		this->m_tail = NULL;
 	}
 	bool insert(T);
 	bool remove(T);
@@ -28,7 +28,7 @@ public:
 
 template<class T, class C>
 bool dlista<T,C>::find(T x, dnode<T> **&p, dnode<T> *&r){
-	for(p=&(this->m_head->m_node[1]), r=this->m_head->m_node[1]; *p and cmp(x,(*p)->m_dato); r=*p, p=&((*p)->m_node[1]));
+	for(p=&(this->m_head), r=this->m_head; *p and cmp(x,(*p)->m_dato); r=*p, p=&((*p)->m_node[1]));
 	return (*p and x==(*p)->m_dato);
 }
 
@@ -37,7 +37,6 @@ bool dlista<T,C>::insert(T x){
 	dnode<T> **p, *r;
 	if(find(x,p,r))	return false;
 	dnode<T> *n = new dnode<T>(x), *t = *p;
-	//cout << *p << endl;
 	*p = n;
 	n->m_node[1] = t;
 	if(t){
@@ -46,7 +45,7 @@ bool dlista<T,C>::insert(T x){
 		return true;
 	}
 	n->m_node[0] = r;
-	this->m_tail->m_node[0] = n;
+	this->m_tail = n;
 	return true;
 }
 
@@ -61,21 +60,21 @@ bool dlista<T,C>::remove(T x){
 		delete t;
 		return true;
 	}
-	this->m_tail->m_node[0] = r;
+	this->m_tail = r;
 	delete t;
 	return true;
 }
 
 template<class T, class C>
 void dlista<T,C>::print(){
-	for(dnode<T> *tm=this->m_head->m_node[1]; tm; tm=tm->m_node[1])
+	for(dnode<T> *tm=this->m_head; tm; tm=tm->m_node[1])
 		cout << tm->m_dato << " ";
 	cout << endl;
 }
 
 template<class T, class C>
 void dlista<T,C>::printr(){
-	for(dnode<T> *tm=this->m_tail->m_node[0]; tm; tm=tm->m_node[0])
+	for(dnode<T> *tm=this->m_tail; tm; tm=tm->m_node[0])
 		cout << tm->m_dato << " ";
 	cout << endl;
 }
