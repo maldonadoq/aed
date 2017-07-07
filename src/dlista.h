@@ -47,7 +47,7 @@ bool dlista<T,C>::insert(T x){
 	n->m_node[0] = r;
 	this->m_tail = n;
 	return true;
-}
+}	
 
 template<class T, class C>
 bool dlista<T,C>::remove(T x){

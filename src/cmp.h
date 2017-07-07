@@ -1,6 +1,9 @@
 #ifndef _CMP_H_
 #define _CMP_H_
 
+#include <iostream>
+
+using namespace std;
 
 //polimorfismo
 template<class T>
@@ -58,5 +61,7 @@ class cm{
 public:
 	inline bool operator()(T x, T y){	return x<=y;	}
 };
+
+void space(unsigned t){	for(unsigned i=0; i<t; i++)	cout << " ";	}
 
 #endif

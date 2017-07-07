@@ -45,12 +45,6 @@ void p(int *a, int t){
     }
 }
 
-int fn(int t, int th){
-    int r = t/th;
-    if(t%th != 0)   r++;
-    return r;
-}
-
 void pull(int *a, int *b, int *c, int*d, int t){
     int temp;
     for(int i=0; i<t; i++){
@@ -81,6 +75,39 @@ void dat(FILE *a, int *A, int t, void (*p)(int *, int)){
 void dat_t(FILE *a, int *A, int t, void (*p)(int *, int)){
     double tim = (double)(time(A, t,p)/1000);
     fprintf(a, "%lf\t", tim);
+}
+
+template<class T, class C>
+double time_insert(T *&a, C t){
+    struct timeval ti, tf;
+    double tiempo;
+    gettimeofday(&ti, NULL);
+    
+    srand(time(NULL));
+    for(C i=0; i<t; i++){
+        a->insert(rand()%t);
+    }
+
+    gettimeofday(&tf, NULL);
+    tiempo = (tf.tv_sec - ti.tv_sec)*1000 + (tf.tv_usec - ti.tv_usec)/1000;
+    return tiempo;
+}
+
+void timestamp(){
+# define TIME_SIZE 29
+  static char time_buffer[TIME_SIZE];
+  const struct tm *tm;
+  size_t len;
+  time_t now;
+
+  now = time ( NULL );
+  tm = localtime ( &now );
+
+  len = strftime ( time_buffer, TIME_SIZE, "%d %B %Y %I:%M:%S %p", tm );
+  if ( len != 0 ) cout << time_buffer << "\n";
+
+  return;
+# undef TIME_SIZE
 }
 
 #endif

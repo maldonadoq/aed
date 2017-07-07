@@ -1,74 +1,74 @@
 #include <iostream>
-#include <stdio.h>
-#include "../func/func.cpp"
+#include "src/hash.h"
+#include "src/cmp.h"
+#include "src/btree.h"
+#include <math.h>
+#include <list>
 
 using namespace std;
 
-class t_hash{
+template<class T>
+class fdisp{
 public:
-	int *m_a;
-	int m_t;
-	t_hash(int t){
-		this->m_t = t;
-		this->m_a = new int[this->m_t];
+	inline unsigned operator()(T a){
+		return pow(a,2);
 	}
-
-	void f_hash(int *v){
-		for(int i=0; i<this->m_t; i++){
-			int ind = modulo1(*(v+i), this->m_t);
-			while(*(m_a+ind)!=0){
-				ind++;
-				ind = modulo1(ind, this->m_t);
-			}
-			*(m_a+ind) = *(v+i);
-		}
-	}
-
-	void print(){
-		for(int i=0; i<this->m_t; i++)	cout << *(m_a + i) << " ";
-		cout << endl;
-	}
-
-	int buscar(int d){
-		int ind = modulo1(d, this->m_t), c = 0;
-		//bool t=true;
-		while(*(m_a + ind)!=0){
-			if(*(m_a + ind) == d)	return ind;
-			//ind++;
-			ind = modulo1(ind++, this->m_t);
-			c++;
-			if(c>this->m_t)	return -1;
-		}
-		return -1;
-	}
-
-	~t_hash(){	};
-	
 };
 
-int main(int argc, char const *argv[]){
-	int t = 8;
-	int *s = new int[t];
-	
-	/*srand(time(NULL));
-	for(int i=0; i<t; i++){
-		*(s+i) = rand()%100;
-	}*/
-	
-	*(s+0) = 20; *(s+1) = 33; *(s+2) = 21; *(s+3) = 10;
-	*(s+4) = 12; *(s+5) = 14; *(s+6) = 56; *(s+7) = 100;
+template<class T, class C>
+class atree{
+public:
+	btree<T,C> *at;
+	atree(){	this->at = new btree<T,C>();	}
+	bool ins(T x){
+		return at->insert(x);
+	}
+	bool rem(T x){
+		return at->remove(x);
+	}
+	bool fin(T x){
+		bnode<T> **p;
+		return at->find(x,p);
+	}
+	unsigned size(){
+		return at->size;
+	}
+	void pri(){
+		at->inorden(this->at->m_root);
+	}
+	~atree(){	};
+};
 
-	t_hash *h = new t_hash(t);
-	h->f_hash(s);
-	h->print();
-	cout << h->buscar(20) << endl;
-	cout << h->buscar(56) << endl;
-	cout << h->buscar(12) << endl;
-	cout << h->buscar(200) << endl;
-	cout << h->buscar(33) << endl;
-	cout << h->buscar(14) << endl;
-	cout << h->buscar(21) << endl;
-	cout << h->buscar(10) << endl;
+//2039
+const unsigned r=10;
+typedef chash<int,fdisp<int>,atree<int,cml<int>>,r> _hash;
+
+int main(int argc, char const *argv[]){
+	FILE *nu = fopen("../datos/nu.dat","w");
+	fprintf(nu,"%d\t%d\n",0,0);
+	fprintf(nu,"%d\t%d\n",r,0);
+	fclose(nu);
+
+
+	_hash *a = new _hash();
+	unsigned t=30;
+	srand(time(NULL));
+
+	for(unsigned i=0; i<t; i++)	a->insert(i);
+	cout << a->find(3) << endl;
+	cout << a->find(4) << endl;
+	cout << a->remove(3) << endl;
+	cout << a->remove(3) << endl;
+
+	FILE *da = fopen("../datos/hash.dat","w");
+	for(unsigned i=0; i<r; i++)	fprintf(da,"%d\t%d\n",i,a->m_table[i].size());
+	fclose(da);
+	
+	for(unsigned i=0; i<r; i++){
+		cout << "m_table[" << i << "]:\t";
+		a->print(i);
+	}
 
 	return 0;
+	
 }

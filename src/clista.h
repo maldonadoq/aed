@@ -36,7 +36,7 @@ bool clista<T,C>::find(T x, lnode<T> **&p){
 
 template<class T, class C>
 bool clista<T,C>::insert(T x){
-	lnode<T> **p;
+	lnode<T> **p = &(m_head);
 	if(find(x,p)){
 		m_tail->m_next = m_head;
 		return false;

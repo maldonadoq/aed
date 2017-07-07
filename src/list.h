@@ -2,7 +2,6 @@
 #define _LIST_H_
 
 #include <iostream>
-#include "cmp.h"
 #include "node.h"
 #include <assert.h>
 using namespace std;
@@ -10,21 +9,21 @@ using namespace std;
 template<class T, class C>
 class list{
 private:
-	//CP<T> *m_cmp;
+	CP<T> *m_cmp;
 	//bool (*cmp)(T, T);
 	/*fn<T> cmp;
 	bool (fn<T>::*ptr)(T, T);*/
-	C cmp;
+	//C cmp;
 	lnode<T> *m_head;
 public:
 		//polimorfismo
-	//list(CP<T> *w){	this->m_cmp = w;	}
+	list(CP<T> *w){	this->m_cmp = w;	}
 		//puntero a funcion
 	//list(bool (*r)(T,T)){	this->cmp = r;	}
 		//puntero a metodo
 	//list(bool (fn<T>::*p)(T, T)){	this->ptr = p;	}
 		//template
-	list(){	this->m_head = NULL;	}
+	//list(){	this->m_head = NULL;	}
 	bool find(T, lnode<T> **&);
 	bool insert(T);
 	bool remove(T);
@@ -35,14 +34,10 @@ public:
 
 template<class T, class C>
 bool list<T,C>::find(T x, lnode<T> ** &p){
-		//polimorfismo
-	//for(p = &(this->m_head); *p and this->m_cmp->cmp(x,(*p)->m_dato); p = &((*p)->m_next) );
-		//puntero a funcion
-	//for(p = &(this->m_head); *p and cmp(x,(*p)->m_dato); p = &((*p)->m_next) );
-		//puntero a metodo
-	//for(p = &(this->m_head); *p and (cmp.*ptr)(x,(*p)->m_dato); p = &((*p)->m_next) );
-		//template
-	for(p = &(this->m_head); *p and cmp(x,(*p)->m_dato); p = &((*p)->m_next) );
+		//polimorfismo this->m_cmp->cmp(x,(*p)->m_dato)
+		//puntero a funcion cmp(x,(*p)->m_dato)
+		//puntero a metodo	(cmp.*ptr)(x,(*p)->m_dato)
+	for(p = &(this->m_head); *p and this->m_cmp->cmp(x,(*p)->m_dato); p = &((*p)->m_next) );
 	return (*p and x==(*p)->m_dato);
 }
 
@@ -86,16 +81,5 @@ list<T,C>::~list(){
 		delete t;
 	}
 }
-
-/*F2<int> r;
-	CP<int> *p = &r;
-	list<int> *a = new list<int>(p);
-	puntero a funcion
-	list<int> *a = new list<int>(gn);	
-	puntero a metodo
-	bool (fn<int>::*met)(int, int);
-	met = &fn<int>::f1;
-	list<int> *a = new list<int>(met);*/
-
 
 #endif

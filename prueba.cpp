@@ -3,6 +3,7 @@
 #include "src/sws.h"
 #include "src/sort.h"
 #include "src/sort_t.h"
+#include <list>
 
 FILE *A;
 
