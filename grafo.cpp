@@ -46,9 +46,10 @@ int main(int argc, char const *argv[]){
 	cb[0]=0;	cb[1]=255;	cb[2]=0;
 	cc[0]=255;	cc[1]=255;	cc[2]=255;
 	pre *p = new pre(g);
-	//p->push();
-	//p->calcular();
-	//p->save();
+	
+	p->push();
+	p->calcular();
+	p->save();
 	
 	csearch<box,pre> *a = new csearch<box,pre>(g,p);
 	csearch<box,pre> *b = new csearch<box,pre>(g,p);

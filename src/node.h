@@ -30,12 +30,14 @@ public:
 	}
 };
 
+//arbol, m_road
 template<class T>
 class bnode{
 public:
     T m_dato;
     bnode<T> *m_node[2];
     int m_balance, m_hight;
+    vector<unsigned> m_road;
     bnode(T x){
         this->m_dato = x;
         this->m_node[0] = this->m_node[1] = NULL;

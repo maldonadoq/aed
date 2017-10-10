@@ -34,9 +34,9 @@ public:
         this->precalculo = pr;
     }
 
-	void f(dnode<unsigned> **&p, unsigned i, unsigned j){
-        *p = new dnode<unsigned>(i);
-        dnode<unsigned> **q;
+	void f(bnode<unsigned> **&p, unsigned i, unsigned j){
+        *p = new bnode<unsigned>(i);
+        bnode<unsigned> **q;
         tree->find(j,q);
         (*p)->m_road = (*q)->m_road;
         (*p)->m_road.push_back(i);
@@ -56,7 +56,7 @@ public:
         pq.pushd(this->M->m_nodes[i1]);
         eiterator it;
         node *t;
-        dnode<unsigned> **p;
+        bnode<unsigned> **p;
         while(!pq.empty()){
             t = pq.top();   pq.pop();
             if(t==this->M->m_nodes[j1])    break;
@@ -71,7 +71,7 @@ public:
         gettimeofday(&tf, NULL);
         tiempo = (tf.tv_sec - ti.tv_sec)*1000 + (tf.tv_usec - ti.tv_usec)/1000;
         vector<unsigned> sws;
-        dnode<unsigned> **r;
+        bnode<unsigned> **r;
         if(!tree->find(j1,r)){  
             this->exi=false; 
             this->road = sws; 

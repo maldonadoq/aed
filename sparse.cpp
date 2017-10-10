@@ -103,7 +103,7 @@ public:
 	    }
 
 	    c.print();
-		return sparse<T,n>(xst,yst);
+		return c;
 	}
 
 	void set(unsigned _x, unsigned _y, T d){
@@ -161,18 +161,14 @@ public:
 
 typedef sparse<int,0> spars;
 int main(int argc, char const *argv[]){
-	spars a(4,4);
+	spars a(2,2);
 	//insert
 	a(0,0) = 0;		a(0,1) = 1;
-	a(0,2) = 2;		a(0,3) = 3;
-	a(1,0) = 4;		a(1,1) = 5;
-	a(1,2) = 6;		a(1,3) = 7;
-	a(2,0) = 8;		a(2,1) = 9;
-	a(2,2) = 10;	a(2,3) = 11;
-	a(3,0) = 12;	a(3,1) = 13;
-	a(3,2) = 14;	a(3,3) = 15;
+	a(1,0) = 2;		a(1,1) = 3;
 	a.print();
 	a.lista();
+
+
 
 	return 0;
 }

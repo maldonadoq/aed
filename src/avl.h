@@ -8,6 +8,7 @@
 #include <math.h>
 #include "node.h"
 #include "cmp.h"
+#define INDENT_STEP  4
 
 using namespace std;
 
@@ -35,6 +36,8 @@ public:
 	void RL(bnode<T> **&);
 	void LR(bnode<T> **&);
 	void print();
+	void print_w();
+	void print_h(bnode<T> *, int);
 	~avl();
 };
 
@@ -102,8 +105,7 @@ bool avl<T,C>::insert(T x){
 	*p = new bnode<T>(x);
 	this->size++;
 	balance();
-	cout << "insert: " << x << endl;
-	print();
+	//cout << "insert: " << x << endl;
 	return true;
 }
 
@@ -127,7 +129,6 @@ bool avl<T,C>::remove(T x){
 	delete t;
 	balance();
 	cout << "remove: " << x << endl;
-	print();
 	return true;
 }
 
@@ -233,6 +234,27 @@ void avl<T, C>::print(){
     }
     cout << endl;
 }                        
+
+template<class T, class C>
+void avl<T,C>::print_h(bnode<T> *n, int indent){
+	int i;
+    if (n == NULL){
+        fputs("<empty tree>", stdout);
+        return;
+    }
+    if (n->m_node[1] != NULL)   print_h(n->m_node[1], indent + INDENT_STEP);
+    for(i = 0; i < indent; i++)
+        fputs(" ", stdout);
+    cout << n->m_dato << endl;
+    if (n->m_node[0] != NULL)    print_h(n->m_node[0], indent + INDENT_STEP);
+}
+
+
+template<class T, class C>
+void avl<T,C>::print_w(){
+	print_h(m_root, 0);
+    puts("");
+}
 
 template<class T, class C>
 avl<T,C>::~avl(){
